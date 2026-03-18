@@ -1,6 +1,7 @@
 package com.dailylog.post.service;
 
 import com.dailylog.post.domain.Post;
+import com.dailylog.post.dto.PostResponse;
 import com.dailylog.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,4 +34,29 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    /** 특정 게시글 조회(read one) */
+    @Transactional(readOnly = true)
+    public PostResponse findById(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+ id));
+        return new PostResponse(post); //dto로 포장해서 반환
+    }
+
+    /** 게시글 수정 */
+    @Transactional
+    public Long update(Long id, String title, String content) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        post.update(title, content); // 엔티티 값 변경하면 jpa가 db를 수정 (더티 체킹)
+        return id;
+    }
+
+    /** 게시글 삭제 */
+
+    @Transactional
+    public void delete(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        postRepository.delete(post); // db에서 해당 데이터 삭제
+    }
 }

@@ -27,4 +27,11 @@ public class Post {
         this.title = title;
         this.content = content;
     }
+
+    // 수정 메서드 추가 2026-03-18
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
 }

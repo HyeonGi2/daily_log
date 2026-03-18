@@ -7,6 +7,8 @@ package com.dailylog.post.controller;
 
 import com.dailylog.post.domain.Post;
 import com.dailylog.post.dto.PostCreateRequest;
+import com.dailylog.post.dto.PostResponse;
+import com.dailylog.post.dto.PostUpdateRequest;
 import com.dailylog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -68,5 +70,34 @@ public class PostController {
     public Long createPost(@RequestBody PostCreateRequest request) {
         // @RequestBody: 프론트엔드가 보내온 json을 dto 객체와 맵핑
         return postService.write(request.getTitle(), request.getContent());
+    }
+
+    /**
+     * 특정 게시글 하나 조회
+     * 접근 주소: GET 8081/api/posts/{id}
+     */
+    @GetMapping("/{id}")
+    public PostResponse getPost(@PathVariable Long id) {
+        // @PathVariable: 주소에 있는 id 값을 Long id에 넣어줌
+        return postService.findById(id);
+    }
+
+    /**
+     * 특정 게시글 수정
+     * 접근 주소: PUT 8081/api/posts/{id}
+     */
+    @PutMapping("/{id}")
+    public Long updatePost(@PathVariable Long id, @RequestBody PostUpdateRequest request) {
+        return postService.update(id, request.getTitle(), request.getContent());
+    }
+
+    /**
+     * 특정 게시글 삭제
+     * 접근 주소: DELETE 8081/api/posts/{id}
+     */
+    @DeleteMapping("/{id}")
+    public Long deletePost(@PathVariable Long id) {
+        postService.delete(id);
+        return id;
     }
 }
