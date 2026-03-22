@@ -1,6 +1,6 @@
 /**
 * 타임리프 방식이 아닌 실무표준으로 변경 -> json, REST API + React/Vue
-* @Controller (HTMl 파일명 반환) -> @RestController (데이터 반환)
+* @Controller (HTMl 파일명 반환) -> @RestController (데이터 반환).
 * */
 
 package com.dailylog.post.controller;
